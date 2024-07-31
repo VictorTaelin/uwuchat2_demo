@@ -33,13 +33,13 @@ export default {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
-      inject: false,
+      inject: 'body',
     }),
   ],
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'docs'),
     clean: true,
   },
-  mode: 'development',
+  mode: 'production',
 };
