@@ -1,12 +1,12 @@
 import { UwUChat2Client } from 'uwuchat2';
 
-console.log("oxi");
-
 // Types
 // -----
 
 const FPS = 32;
-const PID = Math.floor(Math.random() * (2 ** 32));
+const PID = Math.floor(Math.random() * (2 ** 16));
+
+console.log("PID is:", PID);
 
 type Time = number; // 48-bit
 type Tick = number; // 48-bit
@@ -228,13 +228,22 @@ function handle_key_event(event: KeyboardEvent) {
     const isKeyDown = event.type === 'keydown';
     if (keyState[key] !== isKeyDown) {
       keyState[key] = isKeyDown;
+      var time = client.time();
+      var tick = time_to_tick(time);
       var action : Action = {
         $    : "KeyEvent",
-        time : client.time(),
+        time : time,
         pid  : PID,
         key  : key,
         down : isKeyDown
       };
+      // Add to own action log 
+      // TODO: abstract into modular function
+      if (!state.action_logs[tick]) {
+        state.action_logs[tick] = [];
+      }
+      state.action_logs[tick].push(action);
+      // Send to server
       client.send(room, serialize_action(action));
     }
   }
@@ -298,26 +307,16 @@ function game_loop() {
 // ----
 
 // Initial State
-var room  : UID   = 1014;
+var room  : UID   = Number(prompt("room:") || 0);
 var state : State = { state_logs: {}, action_logs: {} };
 
 // Inits the client
 const client = new UwUChat2Client();
-await client.init('ws://localhost:7171');
+//await client.init('ws://localhost:7171');
+await client.init('ws://server.uwu.games');
 
 // Joins room
 const leave = client.recv(room, on_message);
 
 // Start the game loop
 game_loop();
-
-
-
-
-
-
-
-
-
-
-
