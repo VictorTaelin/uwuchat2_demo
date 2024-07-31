@@ -1,9 +1,6 @@
 # Dependencies
 node_modules/
 
-# Build output
-dist/
-
 # Temporary files
 tmp/
 
@@ -30,4 +27,3 @@ yarn-error.log*
 
 # Optional: Uncomment if you're using npm
 # package-lock.json
-

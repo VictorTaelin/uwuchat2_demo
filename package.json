@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "uwuchat2": "file:../uwuchat2"
+    "uwuchat2": "0.0.4"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
